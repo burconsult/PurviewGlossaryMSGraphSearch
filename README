@@ -1,12 +1,12 @@
-# Purview Synchronization System
+# Purview Glossary to MS Graph Search Synchronization System
 
-This document describes the components and workflow of the Purview Synchronization System.
+This document describes the components and workflow of the system. It makes glossary terms from Microsoft Purview Glossaries (Classic type) available for search in Microsoft 365 by synchronizing them to MS Graph external items.
 
 ## Overview
 
 The system consists of two main components:
-1.  **Connector App**: Connects to an external system (e.g., ServiceNow) to detect changes.
-2.  **Azure Function App (`PurviewSyncFunc`)**: Listens for change events and updates Azure Purview accordingly.
+1.  **Connector Console App  (`PurviewSearchConnector`)**: Initializes the MS Graph connector and can be used to run tests and initialize partial or full Purview Glossary terms synchronization.
+2.  **Azure Function App (`PurviewSyncFunc`)**: Listens for change events and synchronizes them accordingly.
 
 ## Components
 
@@ -24,7 +24,7 @@ The `PurviewSearchConnector` is a .NET console application designed to bridge Mi
     *   Manage the state of the connection. (`GraphHelper.cs`)
 *   **Indexes Items in Graph:**
     *   Maps fetched Purview terms to `ExternalItem` objects using the defined schema. It cleans potential HTML from descriptions during mapping. (`PurviewHelper.cs`)
-    *   Pushes these `ExternalItem` objects to the selected Graph connection, either performing a full sync (all terms) or an incremental sync (only terms updated since the last run, based on `lastSync.txt`).
+    *   Pushes these `ExternalItem` objects to the selected Graph connection, either performing a full sync (all terms), a partial sync (specific glossary) or an incremental sync (only terms updated since the last run, based on `lastSync.txt`).
     *   Can also delete all indexed items from a connection. (`Program.cs`, `GraphHelper.cs`)
 *   **Configuration:** Requires Azure AD app registration details and the Purview account name to be configured in `config.ini`. The `Settings.cs` file handles loading these settings.
 *   **Operation:** Runs as an interactive console application, providing a menu to perform the various tasks (connection management, schema registration, item synchronization). It tracks the last sync timestamp in `lastSync.txt` for incremental updates.
@@ -97,7 +97,7 @@ The `PurviewToGraphSyncFunction` is an Azure Function App designed to automatica
     *   Build the project (`dotnet build`).
 4.  **Create Graph Connection & Schema:**
     *   Run the `PurviewSearchConnector` executable (`dotnet run` or run the compiled `.exe`).
-    *   Choose option `1` to create a new connection. Provide a unique ID (e.g., `purviewglossary`), name, and description.
+    *   Choose option `1` to create a new connection. Provide a unique ID (e.g., `purviewglossarysearch`), name, and description.
     *   **Important:** Note the `connectionId` you provided.
     *   Choose option `4` to register the schema for the newly created connection.
     *   Optionally, choose option `7` to push all current terms for an initial population.
@@ -134,4 +134,4 @@ The `PurviewToGraphSyncFunction` is an Azure Function App designed to automatica
 
 *   **Security:** The `PurviewSearchConnector/config.ini` and `PurviewToGraphSyncFunction/local.settings.json` files contain sensitive credentials. Ensure they are excluded from source control (handled by the root `.gitignore` file). Use the provided `.template` files as a starting point.
 *   **State File:** The `PurviewSearchConnector/lastSync.txt` file stores the timestamp of the last manual sync performed by the console app. It is generated at runtime and should generally not be committed to source control.
-*   **License:** Consider adding a `LICENSE` file (e.g., MIT, Apache 2.0) to the root of the repository to define how others can use or contribute to this project. 
+*   **Dependencies:** Make sure to install the necessary packages from NuGet. Check MSLearn documentation for more details.

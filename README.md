@@ -134,4 +134,6 @@ The `PurviewToGraphSyncFunction` is an Azure Function App designed to automatica
 
 *   **Security:** The `PurviewSearchConnector/config.ini` and `PurviewToGraphSyncFunction/local.settings.json` files contain sensitive credentials. Ensure they are excluded from source control (handled by the root `.gitignore` file). Use the provided `.template` files as a starting point.
 *   **State File:** The `PurviewSearchConnector/lastSync.txt` file stores the timestamp of the last manual sync performed by the console app. It is generated at runtime and should generally not be committed to source control.
+*   **Translations:** The `PurviewSearchConnector/PurviewHelper.cs` file contains an example of rudimentary translation functionality for the status of a term which can be expanded (look for `statusTranslations` ).
+*   **Testing:** The file may contain testing mechanisms which have been commented out, feel free to reactivate them for verbose debugging.
 *   **Dependencies:** Make sure to install the necessary packages from NuGet. Check MSLearn documentation for more details.

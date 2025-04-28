@@ -1,0 +1,16 @@
+{
+  "IsEncrypted": false,
+  "Values": {
+    "AzureWebJobsStorage": "UseDevelopmentStorage=true", // OR your Azure Storage connection string
+    "FUNCTIONS_WORKER_RUNTIME": "dotnet-isolated",
+    // --- Required settings for Purview-Graph Sync ---
+    "ClientID": "YOUR_APP_CLIENT_ID",
+    "ClientSecret": "YOUR_APP_CLIENT_SECRET",
+    "TenantID": "YOUR_TENANT_ID",
+    "PurviewEndpoint": "https://YOUR_PURVIEW_ACCOUNT_NAME.purview.azure.com",
+    "GraphConnectionId": "YOUR_GRAPH_CONNECTION_ID", // The ID of the connection created via PurviewSearchConnector
+    "TimestampContainerName": "purview-sync-timestamps", // Optional: Defaults to this if not set
+    "TimerSchedule": "0 */30 * * * *" // Optional: Example schedule (every 30 mins). Set to your desired CRON expression.
+    // --------------------------------------------------
+  }
+} 

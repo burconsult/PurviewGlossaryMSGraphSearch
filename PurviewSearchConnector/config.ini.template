@@ -1,0 +1,7 @@
+[Azure]
+ClientID = YOUR_APP_CLIENT_ID
+ClientSecret = YOUR_APP_CLIENT_SECRET
+TenantID = YOUR_TENANT_ID
+
+[Purview]
+AccountName = YOUR_PURVIEW_ACCOUNT_NAME 

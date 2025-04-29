@@ -407,7 +407,7 @@ async Task UpdateItemsAsync(ExternalConnection? connection, string? tenantId, bo
         ExternalItem graphItem;
         try
         {
-            graphItem = MapPurviewTermToExternalItem(term, glossaryName, tenantId!); // Pass tenantId safely
+            graphItem = PurviewHelper.MapPurviewTermToExternalItem(term, glossaryName, tenantId!); // Pass tenantId safely
         }
         catch (Exception mapEx)
         {

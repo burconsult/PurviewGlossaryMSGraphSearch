@@ -279,8 +279,10 @@ public static class PurviewHelper
         string acronym = term.Abbreviation ?? string.Empty;
         string termGuid = term.Guid;
 
-        string purviewBaseUrl = _settings?.PurviewEndpoint?.Replace(".purview.azure.com", ".microsoft.com/datacatalog/governance") ?? "https://web.purview.azure.com";
-        string purviewUrl = $"{purviewBaseUrl}/main/catalog/glossary/term?termGuid={termGuid}";
+        // Construct the modern Purview portal URL directly, as the UI is now unified at purview.microsoft.com
+        // The previous logic tried to convert the API endpoint, leading to incorrect URLs.
+        const string purviewTermUrlFormat = "https://purview.microsoft.com/datacatalog/governance/main/catalog/glossary/term?termGuid={0}";
+        string purviewUrl = string.Format(purviewTermUrlFormat, termGuid);
 
         string cleanedDefinition = CleanHtml(definition);
         
